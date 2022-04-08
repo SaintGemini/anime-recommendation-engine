@@ -1,0 +1,18 @@
+.top-rated-collection{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.show-img{
+    height: 350px;
+    width: auto;
+}
+
+.filter-by-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
