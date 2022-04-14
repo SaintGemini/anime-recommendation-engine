@@ -1,78 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/index.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>{{req}}</title>
-</head>
-<body>
-        <!-- Nav Bar -->
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-                <div class="container-fluid">
-    
-                  <a class="btn btn-outline-light" href="/">Home</a>
-    
-                  <div class="d-flex">
-                    <div class="navbar-nav">
-                      <button type="button" class="btn btn-outline-light" data-toggle="collapse" data-target="#knowledge-filter">Filter By</button>
-                      <a class="btn btn-outline-light" href="#">Sign In</a>
-                      <a class="btn btn-outline-light" href="#">Pricing</a>
-                    </div>
-                  </div>
-    
-                </div>
-              </nav>
-         </header>
-    
-         <form method="post">
-         <div id="knowledge-filter" class="collapse">
-          <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <div class="filter-by-container">
-              
-                {% for genre in genres%}
-                <div class="'genre-filter-button">
-                  <div>
-                    <button type="submit" class="btn btn-outline-light" name="usr-filter" value="{{genre}}">{{genre}}</button>
-                  </div>
-                </div>
-              {% endfor %}
-              {% for decade in decades%}
-              <div class="'genre-filter-button">
-                <div>
-                  <button type="submit" class="btn btn-outline-light" name="usr-filter" value="{{decade}}">{{decade}}</button>
-                </div>
-              </div>
-              {% endfor %}
-          
-              </div>
-      
-            </div>
-          </nav>
-         </div>
-        </form>
+{% extends "base.html"%}
 
+{% block stylesheet%}<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/index.css') }}">{% endblock %}
+{% block title %}{{req}}{% endblock %}
+
+{% block body %}
+
+<div>
+    <h2>All Time in {{req}}</h2>
+</div>
+
+   <div class="top-rated-collection">
+
+     {% for anime in top_rated%}
+      <div class="'anime-show" style="padding: 0px 5px 0px 5px;">
         <div>
-            <h2>All Time in {{req}}</h2>
+          <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
+          <p class="anime-name">{{anime[0]}}</p>
         </div>
-      
-           <div class="top-rated-collection">
-      
-             {% for anime in top_rated%}
-              <div class="'anime-show">
-                <div>
-                  <img src={{anime[1]}} class="show-img">
-                  <p>{{anime[0]}}</p>
-                </div>
-              </div>
-             {% endfor %}
-           </div>
+      </div>
+     {% endfor %}
+   </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock %}

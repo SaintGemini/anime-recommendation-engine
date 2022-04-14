@@ -2,13 +2,19 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    
 }
 
 .show-img{
     height: 350px;
-    width: auto;
+    width: 300px;
 }
+
+.anime-name{
+    width: 300px;
+}
+
 
 .filter-by-container{
     display: flex;
