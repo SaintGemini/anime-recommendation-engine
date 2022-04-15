@@ -20,9 +20,15 @@
     
                   <div class="d-flex">
                     <div class="navbar-nav">
-                      <button type="button" class="btn btn-outline-light" data-toggle="collapse" data-target="#knowledge-filter">Filter By</button>
+                      
+                      {% if 'user' in session %}
+                      <a class="btn btn-outline-light" href="/logout">Logout</a>
+                      {% else %}
                       <a class="btn btn-outline-light" href="/login">Sign In</a>
+                      {% endif %}
+                      
                       <a class="btn btn-outline-light" href="/signup">Sign Up</a>
+                      <button type="button" class="btn btn-outline-light" data-toggle="collapse" data-target="#knowledge-filter">Filter By</button>
                     </div>
                   </div>
     
