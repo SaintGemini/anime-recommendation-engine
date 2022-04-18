@@ -66,7 +66,7 @@ def get_top_rated_decade(decade, n, df):
 
 def get_show_by_name(show_name, df):
     '''
-    Gets all the info about an anime by name.
+    Gets the row of info about an anime by name.
 
     INPUT:
     show_name - a string of the anime title
@@ -74,21 +74,18 @@ def get_show_by_name(show_name, df):
 
     OUTPUT:
     show.iloc[0] - the entire row in the df with all the show info
-
-    INDEXES AND THEIR MEANING
-    0 - the id of the anime
-    1 - the title of the anime
-    2 - the description of the anime
-    3 - the genre the show belongs to
-    4 - the aired dates
-    5 - the num of episodes
-    6 - the number of members in the show group in myanimelist.net
-    7 - the popularity of the show
-    8 - the rank of the show
-    9 - the average rating of the show
-    10 - the img_url
-    11 - the link to myanimelist.net for the show
-
     '''
     show = df[df['title'] == show_name]
     return show.iloc[0]
+
+def get_show_by_id(anime_id, df):
+    '''
+    INPUT:
+    show_name - a string of the anime title
+    df - the clean animes df in the data directory
+
+    OUTPUT:
+    show.iloc[0] - the entire row in the df with all the show info
+    '''
+    show = df[df['uid'] == int(anime_id)]['title']
+    return show

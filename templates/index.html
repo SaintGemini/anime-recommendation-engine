@@ -7,6 +7,26 @@
 
 <small>Data used was last updated in 2020. Some anime shows might not have current info. (i.e. number of episodes, etc...) </small>
 
+{% if 'user' in session %}
+  {% if 'content-flt' in session%}
+    <div>
+      <h2>Because you like {{show_name}}</h2>
+    </div>
+
+    <div class="top-rated-collection">
+
+      {% for anime in similar_shows %}
+      <div class="anime-show" style="padding: 0px 5px 0px 5px;">
+        <div>
+          <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
+          <p class="anime-name">{{anime[0]}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endif %}
+
 <div>
     <h2>All Time Top</h2>
  </div>
@@ -14,7 +34,7 @@
    <div class="top-rated-collection">
 
      {% for anime in top_rated%}
-      <div class="'anime-show" style="padding: 0px 5px 0px 5px;">
+      <div class="anime-show" style="padding: 0px 5px 0px 5px;">
         <div>
           <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
           <p class="anime-name">{{anime[0]}}</p>
@@ -27,7 +47,7 @@
    <div class="top-rated-collection">
 
     {% for anime in romance%}
-     <div class="'anime-show" style="padding: 0px 5px 0px 5px;">
+     <div class="anime-show" style="padding: 0px 5px 0px 5px;">
       <div>
         <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
         <p class="anime-name">{{anime[0]}}</p>
@@ -40,7 +60,7 @@
   <div class="top-rated-collection">
 
     {% for anime in action%}
-     <div class="'anime-show" style="padding: 0px 5px 0px 5px;">
+     <div class="anime-show" style="padding: 0px 5px 0px 5px;">
        <div>
         <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
          <p class="anime-name">{{anime[0]}}</p>
@@ -53,8 +73,8 @@
   <h2>Top Historical</h2>
   <div class="top-rated-collection">
 
-    {% for anime in historical%}
-    <div class="'anime-show" style="padding: 0px 5px 0px 5px;">
+    {% for anime in historical %}
+    <div class="anime-show" style="padding: 0px 5px 0px 5px;">
       <div>
         <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
         <p class="anime-name">{{anime[0]}}</p>
@@ -67,7 +87,7 @@
   <div class="top-rated-collection">
 
     {% for anime in old%}
-     <div class="'anime-show" style="padding: 0px 5px 0px 5px;">
+     <div class="anime-show" style="padding: 0px 5px 0px 5px;">
       <div>
         <a href="/show-info/{{anime[0]}}"><img src={{anime[1]}} class="show-img"></a>
         <p class="anime-name">{{anime[0]}}</p>

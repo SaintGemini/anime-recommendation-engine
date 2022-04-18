@@ -1,10 +1,12 @@
 from flask import Flask, redirect, render_template, request, flash, session
 import pandas as pd
+import numpy as np
 import filter as flt
 import content_filter as cont_flt
 from flask_sqlalchemy import SQLAlchemy
 import pymysql as sql
 import hashlib
+import random
 from datetime import timedelta
 
 
@@ -28,20 +30,41 @@ animes_df = pd.read_csv('data/animes-clean.csv')
 genres = ['Action', 'Adventure', 'Cars', 'Comedy', 'Dementia', 'Demons', 'Drama', 'Ecchi', 'Fantasy', 'Game', 'Harem', 'Hentai', 'Historical', 'Horror', 'Josei', 'Kids', 'Magic', 'Martial Arts', 'Mecha', 'Military', 'Music', 'Mystery', 'Parody', 'Police', 'Psychological', 'Romance', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo Ai', 'Shounen', 'Shounen Ai', 'Slice of Life', 'Space', 'Sports', 'Super Power', 'Supernatural', 'Thriller', 'Vampire', 'Yaoi', 'Yuri']
 decades = ['Pre 1970s', '1970s', '1980s', '1990s', '2000s', '2010s']
 
-top_rated = flt.get_top_rated(40, animes_df)
+# create dot product dataframe used for content based filtering
+dot_prod_shows_df = pd.read_csv('data/similar-shows.csv')
+dot_prod_shows_df = dot_prod_shows_df.drop(['Unnamed: 0'], axis=1)
 
+# create top rated recommendations to populate home page
+top_rated = flt.get_top_rated(40, animes_df)
 historical_top_rated = flt.get_top_rated_genre('Historical', 40, animes_df)
 action_top_rated = flt.get_top_rated_genre('Action', 40, animes_df)
 romance_top_rated = flt.get_top_rated_genre('Romance', 40, animes_df)
 old_top_rated = flt.get_top_rated_decade('Pre 1970s', 40, animes_df)
 
+'''
+---------- Start of routes ----------
+'''
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    similar_shows = []
+    show_name = ''
+    if 'user' in session:
+        if 'content-flt' in session:
+            print(type(session['favorite_shows']))
+            fav_shows = split_ids(session['favorite_shows'])
+            print(fav_shows)
+            show_id = random.choice(fav_shows)
+            print(show_id)
+            show_name = flt.get_show_by_id(show_id, animes_df).values[0]
+            print(show_name)
+
+            similar_shows = cont_flt.find_similar_shows(int(show_id), animes_df, dot_prod_shows_df)
     if request.method == 'POST':
         req = request.form['usr-filter']      
         return redirect('/results/'+req)
 
-    return render_template('index.html', top_rated=top_rated, action=action_top_rated, romance=romance_top_rated, historical=historical_top_rated, old=old_top_rated, genres=genres, decades=decades)
+    return render_template('index.html', show_name=show_name, similar_shows=similar_shows, top_rated=top_rated, action=action_top_rated, romance=romance_top_rated, historical=historical_top_rated, old=old_top_rated, genres=genres, decades=decades)
 
 @app.route('/results/<req>', methods=['GET', 'POST'])
 def results(req):
@@ -109,6 +132,8 @@ def signin():
                 session['favorite_shows'] = user[3]
                 if session['favorite_shows'] == None:
                     session['favorite_shows'] = ''
+                if len(session['favorite_shows']) > 2:
+                    session['content-flt'] = True
                 return redirect('/')
             else:
                 flash('Username or password is incorrect', category='error')
@@ -163,6 +188,20 @@ def show_info(show_name):
     return render_template('show_info.html',  genres=genres, decades=decades, show=show, fav_btn=fav_btn)
 
 
+'''
+---------- End routes ----------
+'''
+
+
+
+'''
+---------- Small helper functions ----------
+'''
+
+def split_ids(favorite_shows):
+    shows = favorite_shows.split('|')
+    shows.pop(0)
+    return shows
 
 def get_top_rated_by_flt(req):
         if req in genres:
@@ -175,6 +214,10 @@ def create_hash_password(password):
     salt = 'ra30a'
     db_password = salt + password
     return hashlib.md5(db_password.encode()).hexdigest()
+
+'''
+---------- End helper functions ----------
+'''
 
 if __name__ == "__main__":
 
