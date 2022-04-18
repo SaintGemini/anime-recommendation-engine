@@ -14,6 +14,15 @@
     <p class="rating">Average Rating: {{show[8]}}</p>
     <p>Ranked: {{show[7]}}</p>
     <p>Episodes: {{show[4]}}</p>
+    {% if 'user' in session %}
+    <form method="post">
+      {% if fav_btn %}
+        <button type="submit" name="add-to-favorite" value={{show[1]}}>Add to favorites</button>
+      {% else %}
+        <button type="submit" name="remove-favorite" value={{show[1]}}>Remove from favorites</button>
+      {% endif %}
+    </form>
+    {% endif %}
   </div>
 </div>
 <div class="quote">

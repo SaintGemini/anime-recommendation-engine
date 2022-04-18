@@ -34,8 +34,13 @@ def get_top_rated_genre(genre, n, df):
     recs = []
     genre_df = df[df[genre] == 1].sort_values(by='score', ascending=False).drop_duplicates()
     
-    for i in range(n):
-        recs.append((genre_df.iloc[i].title, genre_df.iloc[i].img_url))
+    try:
+        for i in range(n):
+            recs.append((genre_df.iloc[i].title, genre_df.iloc[i].img_url))
+    except:
+        for i in range(len(genre_df['title'])):
+            recs.append((genre_df.iloc[i].title, genre_df.iloc[i].img_url))
+        
     
     return recs
 

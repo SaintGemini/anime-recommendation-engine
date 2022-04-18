@@ -1,6 +1,7 @@
 from flask import Flask, redirect, render_template, request, flash, session
 import pandas as pd
 import filter as flt
+import content_filter as cont_flt
 from flask_sqlalchemy import SQLAlchemy
 import pymysql as sql
 import hashlib
@@ -105,7 +106,9 @@ def signin():
             elif username == user[1] and hash_pass == user[2]:
                 session.permanent = True
                 session['user'] = username
-                session['shows_watched'] = user[3]
+                session['favorite_shows'] = user[3]
+                if session['favorite_shows'] == None:
+                    session['favorite_shows'] = ''
                 return redirect('/')
             else:
                 flash('Username or password is incorrect', category='error')
@@ -114,6 +117,7 @@ def signin():
 @app.route('/logout')
 def logout():
     session.pop('user', None)
+    session.pop('favorite_shows', None)
     return redirect('/')
 
 
@@ -121,11 +125,42 @@ def logout():
 @app.route('/show-info/<show_name>', methods=['GET', 'POST'])
 def show_info(show_name):
     if request.method == 'POST':
-        req = request.form['usr-filter']
-        return redirect('/results/'+req)
+        # if adding or removing show from favorites
+        if request.form.get('usr-filter') == None:
+            # if removing
+            if request.form.get('add-to-favorite') == None:
+                show_id = '|' +request.form['remove-favorite']
+                session['favorite_shows'] = session['favorite_shows'].replace(show_id, '')
 
+                query = 'UPDATE database_anime.users SET watched = %s WHERE username = %s'
+                vals = (session['favorite_shows'], session['user'])
+                cursor.execute(query, vals)
+                db.commit()
+                flash('Show removed from favorites', category='success')
+                return redirect('/show-info/'+show_name)
+            # if adding
+            else:
+                query = 'UPDATE database_anime.users SET watched = %s WHERE username = %s'
+                session['favorite_shows'] = session['favorite_shows'] + '|' + request.form['add-to-favorite']
+                vals = (session['favorite_shows'], session['user'])
+                cursor.execute(query, vals)
+                db.commit()
+                flash('Show added to favorites', category='success')
+                return redirect('/show-info/'+show_name)
+
+        if request.form.get('add-to-favorite') == None and request.form.get('remove-favorite') == None:
+            req = request.form['usr-filter']
+            return redirect('/results/'+req)
+            
+    
+    fav_btn = True
     show = flt.get_show_by_name(show_name=show_name, df=animes_df)
-    return render_template('show_info.html',  genres=genres, decades=decades, show=show)
+
+    if 'user' in session:
+        if cont_flt.is_in_favorites(str(show[1]), session['favorite_shows']):
+            fav_btn = False
+
+    return render_template('show_info.html',  genres=genres, decades=decades, show=show, fav_btn=fav_btn)
 
 
 
