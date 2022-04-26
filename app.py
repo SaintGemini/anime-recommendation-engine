@@ -27,7 +27,7 @@ create_table()
 
 # data for easy filtering
 animes_df = pd.read_csv('data/animes-clean.csv')
-animes_df = animes_df.drop(['Unnamed: 0'], axis=1)
+del animes_df['Unnamed: 0']
 genres = ['Action', 'Adventure', 'Cars', 'Comedy', 'Dementia', 'Demons', 'Drama', 'Ecchi', 'Fantasy', 'Game', 'Harem', 'Hentai', 'Historical', 'Horror', 'Josei', 'Kids', 'Magic', 'Martial Arts', 'Mecha', 'Military', 'Music', 'Mystery', 'Parody', 'Police', 'Psychological', 'Romance', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo Ai', 'Shounen', 'Shounen Ai', 'Slice of Life', 'Space', 'Sports', 'Super Power', 'Supernatural', 'Thriller', 'Vampire', 'Yaoi', 'Yuri']
 decades = ['Pre 1970s', '1970s', '1980s', '1990s', '2000s', '2010s']
 
@@ -100,6 +100,9 @@ def signup():
         '''
         Validate sign up user input.
         '''
+        if 'user' in session:
+            return redirect('/')
+
         if request.method == 'POST':
             # get user input
             username = request.form['username']
