@@ -1,5 +1,5 @@
 # Anime Recommendation Engine
-I've always disliked the recommendations that Crunchyroll has given me when searching for a new anime show to watch. Most of their recommendations are for new shows that do not have a big following. I wanted to use what I learned about creating recommendation engines to build my own. The goal of this project is to build a web app that will allow a user to create an account and get personalized recommendations <u>based on their favorite animes</u>. The data I used was scrapped from MyAnimeList.net which is a popular review site for all things anime. More information and a link to the original data set can be found on the "Special Shoutout" section of this README.
+I've always disliked the recommendations that Crunchyroll has given me when searching for a new anime show to watch. Most of their recommendations are for new shows that do not have a big following. I wanted to use what I learned about creating recommendation engines to build my own. The goal of this project is to build a web app that will allow a user to create an account and get personalized recommendations ***based on their favorite animes***. The data I used was scrapped from MyAnimeList.net which is a popular review site for all things anime. More information and a link to the original data set can be found on the "Special Shoutout" section of this README.
 
 ## Special Shoutout
 A big thanks to MARLESSON for scraping the data from MyAnimeList.net and putting the data on Kaggle. Original datasets can be found here: <br>
@@ -13,11 +13,11 @@ Flask, Pandas, Numpy, PyMySQL, Hashlib, DateTime
 - pip3 install pandas
 - pip3 install numpy
 - pip3 install pymysql
-- *** hashlib apart of python standard library, no need to install ***
-- *** datetime apart of python standard library, no need to install ***
+- ***hashlib apart of python standard library, no need to install***
+- ***datetime apart of python standard library, no need to install***
 
 ## Python Version Used
-*** python 3.10.2 ***
+***python 3.10.2***
 
 ## File Descriptions
 - data (Directory that holds the csv files used for project.)
@@ -44,7 +44,7 @@ The dataset taken from Kaggle made knowledge and content based recommendations s
 Overall the recommendations given by the web app were good. As an anime fan I can say that the recommendations were what I was looking for. It would have been easier to evaluate the recommendations if I used a model, but my computer is not strong enough. The recommendations given were not like Crunchroll. The recommendations are based on what was higher rated and ranked and what was better recieved by the fans.
 
 ## Possible errors when running Jupyter notebook
-If running through the Jupyter notebook, please note that when trying to create the dot_prod_shows or the user_item_matrix pandas dataframes you might get the following error <br>
-MemoryError: Unable to allocate X.XX GiB for an array with shape (X, Y) and data type float64 <br>
+If running through the Jupyter notebook, please note that when trying to create the dot_prod_shows or the user_item_matrix pandas dataframes you might get the following error <br><br>
+MemoryError: Unable to allocate X.XX GiB for an array with shape (X, Y) and data type float64 <br><br>
 I found the solution at this link and it would be worth reading through BEFORE running cells in the notebook:<br>
 https://stackoverflow.com/questions/57507832/unable-to-allocate-array-with-shape-and-data-type
