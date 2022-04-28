@@ -1,5 +1,24 @@
-# Anime Recommendation Engine
+# Problem Introduction
 I've always disliked the recommendations that Crunchyroll has given me when searching for a new anime show to watch. Most of their recommendations are for new shows that do not have a big following. I wanted to use what I learned about creating recommendation engines to build my own. The goal of this project is to build a web app that will allow a user to create an account and get personalized recommendations ***based on their favorite animes***. The data I used was scrapped from MyAnimeList.net which is a popular review site for all things anime. More information and a link to the original data set can be found on the "Special Shoutout" section of this README.
+
+# Strategy to Solve Problem
+Creating the three types of filters for recommendation engines (Knowledge, Content and Collaborative) will solve the problem. Basic pandas manipulations to filter by genre and date will be enough to complete knowledge based recs. For content and collaborative based filtering, some of the concepts that were taught in the Recommendations with IBM could help complete these filters. For content based recs, calculating the similarity between any two pair of shows and putting that result in a matrix will provide a way to find similar shows based on a given shows attribute. For collaboritve based filtering, a user-item matrix needs to be created. Users will be the index and the shows will be the columns. This user-item matrix will be used in the same context as the Recs. with IBM project. The user-item matrix will provide the most similar users and from there the web app will grab their favorite shows.
+
+# Metrics
+Rank accuracy is how the recommendation system is measured. Metrics like accuracy cannot be used since I am not using a machine learning model (my computer kept crashing when trying to implement SVD with such big datasets). Each filter will return recommendations with higher ranked/rated shows first.
+
+# Modelling/Hyperparameter Tuning
+No machine learning model was used.
+
+# Results
+The dataset taken from Kaggle made knowledge and content based recommendations straightforward. Using the matrix that calculates the similarity between any two shows (similar-shows.csv), content based recommendations are of high quality. The first two types of filtering were easy considering I just finished the Recommendations with IBM project for this course. The real difficulty of this project began with collaborative based filtering. In the jupyter notebook, the matrices I tried to create (similar-shows and the user-item-matrix) were causing memory errors because they were so big. This was the first time I was dealing with data over 1GB. I decided not to use SVD or Funk SVD because of these Memory Errors that kept coming up. I implemented a version of User-User Based Collaborative Filtering like in Part 3 of the Recommendations with IBM project. This type of collaborative filtering was easy on my computer and gave good results. I was only limited by the capability of my compter so I hope to implement a version of SVD in the future.
+
+# Conclusion
+Overall the recommendations given by the web app were good. As an anime fan I can say that the recommendations were what I was looking for. It would have been easier to evaluate the recommendations if I used a model, but my computer is not strong enough. The recommendations given were not like Crunchroll. The recommendations are based on what was higher rated and ranked and what was better recieved by the fans.
+
+# Improvements
+Figuring out a way to quickly read in large datasets and manipulate large datasets would help improve this project. The initial start up of reading in the data sets take a few minutes. Another improvement I want to make is implementing SVD. My computer kept crashing when first trying to implement SVD which is why I decided not to pursue a model for this project.
+
 
 ## Special Shoutout
 A big thanks to MARLESSON for scraping the data from MyAnimeList.net and putting the data on Kaggle. Original datasets can be found here: <br>
@@ -41,11 +60,6 @@ https://git-lfs.github.com/
 - filter.py (Python file that holds basic ranked based filtering functions.)
 
 
-## Analysis
-The dataset taken from Kaggle made knowledge and content based recommendations straightforward. Using the matrix that calculates the similarity between any two shows (similar-shows.csv), content based recommendations are of high quality. The first two types of filtering were easy considering I just finished the Recommendations with IBM project for this course. The real difficulty of this project began with collaborative based filtering. In the jupyter notebook, the matrices I tried to create (similar-shows and the user-item-matrix) were causing memory errors because they were so big. This was the first time I was dealing with data over 1GB. I decided not to use SVD or Funk SVD because of these Memory Errors that kept coming up. I implemented a version of User-User Based Collaborative Filtering like in Part 3 of the Recommendations with IBM project. This type of collaborative filtering was easy on my computer and gave good results. I was only limited by the capability of my compter so I hope to implement a version of SVD in the future.
-
-## Conclusion
-Overall the recommendations given by the web app were good. As an anime fan I can say that the recommendations were what I was looking for. It would have been easier to evaluate the recommendations if I used a model, but my computer is not strong enough. The recommendations given were not like Crunchroll. The recommendations are based on what was higher rated and ranked and what was better recieved by the fans.
 
 ## Possible errors when running Jupyter notebook
 If running through the Jupyter notebook, please note that when trying to create the dot_prod_shows or the user_item_matrix pandas dataframes you might get the following error <br><br>
