@@ -5,8 +5,12 @@ I've always disliked the recommendations that Crunchyroll has given me when sear
 A big thanks to MARLESSON for scraping the data from MyAnimeList.net and putting the data on Kaggle. Original datasets can be found here: <br>
 https://www.kaggle.com/datasets/marlesson/myanimelist-dataset-animes-profiles-reviews
 
-## Python Libraries Used
-Flask, Pandas, Numpy, PyMySQL, Hashlib, DateTime
+## Libraries Used
+Flask, Pandas, Numpy, PyMySQL, Hashlib, DateTime, Bootstrap, git-lfs
+
+## SPECIFIC INSTALLATION REQUIRED
+To successfully clone and run this project on localhost, git-lfs (githubs large file storage) needs to be installed. Please follow the link and make sure to download the correct version of git-lfs for your OS BEFORE cloning the project. <br><br>
+https://git-lfs.github.com/
 
 ## How to Install Libraries
 - pip3 install Flask
@@ -48,3 +52,17 @@ If running through the Jupyter notebook, please note that when trying to create 
 MemoryError: Unable to allocate X.XX GiB for an array with shape (X, Y) and data type float64 <br><br>
 I found the solution at this link and it would be worth reading through BEFORE running cells in the notebook:<br>
 https://stackoverflow.com/questions/57507832/unable-to-allocate-array-with-shape-and-data-type
+
+## How to clone and run project
+REMINDER: You need to have git-lfs installed on your own computer before cloning. When it's installed, make sure all of the other libraries are installed as well.<br><br>
+To clone the repository, change directory to Desktop and use the command<br><br>
+git clone https://github.com/SaintGemini/anime-recommendation-engine.git <br>
+<br>Once the project is cloned, change directory into the 'anime-recommendation-engine' directory using: cd anime-recommendation-engine <br><br>
+Run the command: python app.py <br><br>
+# Note:
+Please be patient, it will take a few minutes to read in the large csv files, connect to AWS RDS database, do some initial filtering and load the Flask app. Once the app is running, everything is faster. The initial setup will take the longest to load. Loading personal user/collab based recommendations might take a minute when you first log in.
+
+## Some tips for the app
+Add around 5 anime shows to your favorites for good content based recommendations and aroudn 10 animes for good collaborative based recommendations. You will need to log out and back in to see the changes to your personal recommendations.<br>
+Example: After initially creating your profile, add about 5 shows to your favorites. Log out and back in to see your content based recommendations. Add another 5 shows to your favorites, log out/in to see collaborative filtering. Enjoy the project!
+
