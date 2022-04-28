@@ -6,7 +6,7 @@ A big thanks to MARLESSON for scraping the data from MyAnimeList.net and putting
 https://www.kaggle.com/datasets/marlesson/myanimelist-dataset-animes-profiles-reviews
 
 ## Python Libraries Used
-Flask, Pandas, Numpy, PyMySQL, Hashlib, DateTime, Bootstrap
+Flask, Pandas, Numpy, PyMySQL, Hashlib, DateTime
 
 ## How to Install Libraries
 - pip3 install Flask
