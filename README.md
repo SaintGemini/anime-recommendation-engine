@@ -81,10 +81,10 @@ To clone the repository, change directory to Desktop and use the command<br><br>
 git clone https://github.com/SaintGemini/anime-recommendation-engine.git <br>
 <br>Once the project is cloned, change directory into the 'anime-recommendation-engine' directory using: cd anime-recommendation-engine <br><br>
 Run the command: python app.py <br><br>
-# Note:
+# Notes:
 Please be patient, it will take a few minutes to read in the large csv files, connect to AWS RDS database, do some initial filtering and load the Flask app. Once the app is running, everything is faster. The initial setup will take the longest to load. Loading personal user/collab based recommendations might take a minute when you first log in.
 
-## Some tips for the app
-Add around 5 anime shows to your favorites for good content based recommendations and aroudn 10 animes for good collaborative based recommendations. You will need to log out and back in to see the changes to your personal recommendations.<br>
+# Some tips for the app
+You will need to log out and back in to see the changes to your personal recommendations. Add around 5 anime shows to your favorites for good content based recommendations and around 10 animes for good collaborative based recommendations. <br>
 Example: After initially creating your profile, add about 5 shows to your favorites. Log out and back in to see your content based recommendations. Add another 5 shows to your favorites, log out/in to see collaborative filtering. Enjoy the project!
 
