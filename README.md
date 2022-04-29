@@ -16,6 +16,9 @@ This section is found in the Jupyter NoteBook and goes into great detail! Go the
 ## These sections not required for web app project.
 Per the rubric, "If you submit a web application, you only need to submit a link to your Github repository. In this case, since you won't be writing up a separate report, you need to make sure to address the Project Definition, Analysis, and Conclusion sections of the rubric in your README file, or in your Jupyter Notebook if you provide one."
 
+<img width="620" alt="image" src="https://user-images.githubusercontent.com/28576229/166078726-01aaf360-9419-4eec-a187-14a3b8316817.png">
+
+
 # Conclusion
 ## Reflection
 The dataset taken from Kaggle made knowledge and content based recommendations straightforward. Using the matrix that calculates the similarity between any two shows (similar-shows.csv), content based recommendations are of high quality. The first two types of filtering were easy considering I just finished the Recommendations with IBM project for this course. The real difficulty of this project began with collaborative based filtering. In the jupyter notebook, the matrices I tried to create (similar-shows and the user-item-matrix) were causing memory errors because they were so big. This was the first time I was dealing with data over 1GB. I decided not to use SVD or Funk SVD because of these Memory Errors that kept coming up. I implemented a version of User-User Based Collaborative Filtering like in Part 3 of the Recommendations with IBM project. This type of collaborative filtering was easy on my computer and gave good results. I was only limited by the capability of my compter so I hope to implement a version of SVD in the future.<br>
