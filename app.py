@@ -14,7 +14,9 @@ from datetime import timedelta
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'el rata alada'
 app.permanent_session_lifetime = timedelta(hours=3)
+print('Setting up app')
 
+print('Connecting to database')
 # set up database
 db = sql.connect(host='database-anime-1.c3v8mzuixvpi.us-east-2.rds.amazonaws.com', user='admin', password='animerds', port=3306)
 cursor = db.cursor()
@@ -25,26 +27,33 @@ def create_table():
 
 create_table()
 
+print('Database connected')
+
+print('Reading in datasets')
+print('Loading anime dataset...')
 # data for easy filtering
 animes_df = pd.read_csv('data/animes-clean.csv')
 del animes_df['Unnamed: 0']
-genres = ['Action', 'Adventure', 'Cars', 'Comedy', 'Dementia', 'Demons', 'Drama', 'Ecchi', 'Fantasy', 'Game', 'Harem', 'Hentai', 'Historical', 'Horror', 'Josei', 'Kids', 'Magic', 'Martial Arts', 'Mecha', 'Military', 'Music', 'Mystery', 'Parody', 'Police', 'Psychological', 'Romance', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo Ai', 'Shounen', 'Shounen Ai', 'Slice of Life', 'Space', 'Sports', 'Super Power', 'Supernatural', 'Thriller', 'Vampire', 'Yaoi', 'Yuri']
+genres = ['Action', 'Adventure', 'Cars', 'Comedy', 'Dementia', 'Demons', 'Drama', 'Ecchi', 'Fantasy', 'Game', 'Harem', 'Historical', 'Horror', 'Josei', 'Kids', 'Magic', 'Martial Arts', 'Mecha', 'Military', 'Music', 'Mystery', 'Parody', 'Police', 'Psychological', 'Romance', 'Samurai', 'School', 'Sci-Fi', 'Seinen', 'Shoujo', 'Shoujo Ai', 'Shounen', 'Shounen Ai', 'Slice of Life', 'Space', 'Sports', 'Super Power', 'Supernatural', 'Thriller', 'Vampire']
 decades = ['Pre 1970s', '1970s', '1980s', '1990s', '2000s', '2010s']
+print('done')
 
+print('Loading similarity matrix...')
 # create dot product dataframe used for content based filtering
 dot_prod_shows_df = pd.read_csv('data/similar-shows.csv')
 dot_prod_shows_df = dot_prod_shows_df.drop(['Unnamed: 0'], axis=1)
+print('done')
 
+print('Loading user-item matrix...')
 # load user item matrix for collaborative filtering
 user_item = pd.read_csv('./data/user-item-matrix.csv')
 user_item_matrix = user_item.drop(['Unnamed: 0'], axis=1)
+print('done')
 
+print('Loading first recommendations...')
 # create top rated recommendations to populate home page
-top_rated = flt.get_top_rated(40, animes_df)
-historical_top_rated = flt.get_top_rated_genre('Historical', 80, animes_df)
-action_top_rated = flt.get_top_rated_genre('Action', 80, animes_df)
-romance_top_rated = flt.get_top_rated_genre('Romance', 80, animes_df)
-old_top_rated = flt.get_top_rated_decade('Pre 1970s', 80, animes_df)
+top_rated = flt.get_top_rated(200, animes_df)
+print('done')
 
 '''
 ---------- Start of routes ----------
@@ -79,7 +88,7 @@ def index():
         req = request.form['usr-filter']      
         return redirect('/results/'+req)
 
-    return render_template('index.html', similar_usr_recs = similar_usr_recs, show_name=show_name, similar_shows=similar_shows, top_rated=top_rated, action=action_top_rated, romance=romance_top_rated, historical=historical_top_rated, old=old_top_rated, genres=genres, decades=decades)
+    return render_template('index.html', similar_usr_recs = similar_usr_recs, show_name=show_name, similar_shows=similar_shows, top_rated=top_rated, genres=genres, decades=decades)
 
 @app.route('/results/<req>', methods=['GET', 'POST'])
 def results(req):
@@ -149,7 +158,6 @@ def signin():
     validate login input from user.
     '''
     global user_item_matrix
-    flash('Loading personal recommendations might take a minute.', category='success')
     # if user already logged in, redirect to home
     if 'user' in session:
         return redirect('/')
@@ -187,13 +195,12 @@ def signin():
                     user_item_matrix.loc[last_row] = clb_flt.add_user_to_user_item(fav_shows, user_item_matrix)
 
                     # get collaborative recs, save in session data
-                    usr_recs = clb_flt.user_user_recs(last_row, 20, user_item=user_item_matrix)
+                    usr_recs = clb_flt.user_user_recs(last_row, 28, user_item=user_item_matrix)
                     session['collab-flt'] = [str(w) for w in usr_recs]
 
                     # remove user data from user item matrix
                     user_item_matrix.drop(last_row)
 
-                    flash('Log back in after adding shows to your favorites to see updated recommendations after!', category='success')
                 return redirect('/')
 
             # if error with user input
@@ -305,4 +312,4 @@ def create_hash_password(password):
 
 if __name__ == "__main__":
 
-    app.run(debug=True)
+    app.run(debug=False)

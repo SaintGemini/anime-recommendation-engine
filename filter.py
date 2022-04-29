@@ -13,8 +13,10 @@ def get_top_rated(n, df):
     '''
     recs = []
     top_ranked = df.sort_values(by='ranked', ascending=True).drop_duplicates()
-    
+    max_len = len(top_ranked['title']) - 1
     for i in range(n):
+        if i > max_len:
+            break
         recs.append((top_ranked.iloc[i].title, top_ranked.iloc[i].img_url))
                     
     return recs
@@ -32,14 +34,13 @@ def get_top_rated_genre(genre, n, df):
     '''
     
     recs = []
-    genre_df = df[df[genre] == 1].sort_values(by='score', ascending=False).drop_duplicates()
-    
-    try:
-        for i in range(n):
-            recs.append((genre_df.iloc[i].title, genre_df.iloc[i].img_url))
-    except:
-        for i in range(len(genre_df['title'])):
-            recs.append((genre_df.iloc[i].title, genre_df.iloc[i].img_url))
+    genre_df = df[df[genre] == 1].sort_values(by='ranked', ascending=True)
+    max_len = len(genre_df['title']) - 1
+
+    for i in range(n):
+        if i > max_len:
+            break
+        recs.append((genre_df.iloc[i].title, genre_df.iloc[i].img_url))
         
     
     return recs
@@ -56,10 +57,13 @@ def get_top_rated_decade(decade, n, df):
     '''
     
     recs = []
-    decade_df = df[df[decade] == 1].sort_values(by='score', ascending=False).drop_duplicates()
-    
+    decade_df = df[df[decade] == 1].sort_values(by='ranked', ascending=True)
+    max_len = len(decade_df['title']) - 1
     for i in range(n):
+        if i > max_len:
+            break
         recs.append((decade_df.iloc[i].title, decade_df.iloc[i].img_url))
+
     
     return recs
 

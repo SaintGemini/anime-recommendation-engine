@@ -24,14 +24,14 @@ def find_similar_shows(anime_id, animes_df, dot_prod_show_df):
     
     similar_shows = animes_df.iloc[similar_idxs, ]
     similar_shows = similar_shows[similar_shows['uid'] != anime_id]
-    similar_shows.sort_values(by=['score'], ascending=False)
+    similar_shows.sort_values(by=['ranked'], ascending=True)
 
     for name, img in zip(similar_shows['title'], similar_shows['img_url']):
         recs.append((name, img))
-        if len(recs) > 7:
+        # no need to show more than 15 recs at a time
+        if len(recs) > 15:
             break
-    
-    
+
     return recs
 
 def is_in_favorites(show_id, favorite_shows):
