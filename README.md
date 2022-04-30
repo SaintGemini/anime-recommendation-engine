@@ -1,8 +1,8 @@
 # Project Definition
-## Problem Overview
+## Project Overview
 I've always disliked the recommendations that Crunchyroll has given me when searching for a new anime show to watch. Most of their recommendations are for new shows that do not have a big following. I wanted to use what I learned about creating recommendation engines to build my own. The goal of this project is to build a web app that will allow a user to create an account and get personalized recommendations ***based on their favorite animes***. The data I used was scrapped from MyAnimeList.net which is a popular review site for all things anime. More information and a link to the original data set can be found on the "Special Shoutout" section of this README.
 
-## Problem Statement
+## Project Statement
 Creating the three types of filters for recommendation engines (Knowledge, Content and Collaborative) will solve the problem. Basic pandas manipulations to filter by genre and date will be enough to complete knowledge based recs. For content and collaborative based filtering, some of the concepts that were taught in the Recommendations with IBM could help complete these filters. For content based recs, calculating the similarity between any two pair of shows and putting that result in a matrix will provide a way to find similar shows based on a given shows attribute. For collaboritve based filtering, a user-item matrix needs to be created. This user-item matrix will be used in the same context as the Recs. with IBM project. The user-item matrix will provide the most similar users and from there the web app will grab their favorite shows. Each filter will return the recommendation based on rank.
 
 ## Metrics
