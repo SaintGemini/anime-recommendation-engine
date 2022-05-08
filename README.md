@@ -1,4 +1,7 @@
 # Anime Recommendation Engine
+
+Link to blog post about project: https://medium.com/@chacone96/anime-recommendation-engine-84b3dbe9fdcb
+
 ## Project Overview
 I've always disliked the recommendations that Crunchyroll, a popular anime streaming site, has given me when searching for a new anime show to watch. Most of their recommendations are for new shows that do not have a big following or they recommend all time highest rated shows that are also recommended on every other platform. I wanted to use what I learned about creating recommendation engines to build my own. This project will be a stepping stone into building (in the future) my own web application that runs off of a FunkSVD model (a machine learning algorithm).
 
